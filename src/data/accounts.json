@@ -1,0 +1,74 @@
+{
+  "accounts": [
+    {
+      "id": "122208",
+      "name": "John Brown",
+      "email": "john.brown@gmail.com",
+      "phone": "335-893-2407",
+      "currency": "USD"
+    },
+    {
+      "id": "220112",
+      "name": "Michael Rodriguez",
+      "email": "michael.rodriguez@yahoo.com",
+      "phone": "555-301-3499",
+      "currency": "USD"
+    },
+    {
+      "id": "584524",
+      "name": "Patricia Brown",
+      "email": "patricia.brown@hotmail.com",
+      "phone": "884-972-4001",
+      "currency": "USD"
+    },
+    {
+      "id": "961285",
+      "name": "Mary Johnson",
+      "email": "mary.johnson@yahoo.com",
+      "phone": "240-300-6073",
+      "currency": "USD"
+    },
+    {
+      "id": "479545",
+      "name": "James Martinez",
+      "email": "james.martinez@yahoo.com",
+      "phone": "683-377-5474",
+      "currency": "AUD"
+    },
+    {
+      "id": "379788",
+      "name": "Robert Miller",
+      "email": "robert.miller@gmail.com",
+      "phone": "408-303-3852",
+      "currency": "USD"
+    },
+    {
+      "id": "986231",
+      "name": "Patricia Miller",
+      "email": "patricia.miller@outlook.com",
+      "phone": "400-552-5312",
+      "currency": "AUD"
+    },
+    {
+      "id": "872973",
+      "name": "James Davis",
+      "email": "james.davis@outlook.com",
+      "phone": "807-717-3232",
+      "currency": "AUD"
+    },
+    {
+      "id": "596351",
+      "name": "Jennifer Brown",
+      "email": "jennifer.brown@outlook.com",
+      "phone": "818-368-6852",
+      "currency": "USD"
+    },
+    {
+      "id": "642482",
+      "name": "Robert Rodriguez",
+      "email": "robert.rodriguez@yahoo.com",
+      "phone": "941-691-6541",
+      "currency": "USD"
+    }
+  ]
+}

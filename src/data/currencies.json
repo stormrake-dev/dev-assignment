@@ -1,0 +1,53 @@
+{
+  "currencies": [
+    {
+      "id": "ada",
+      "name": "Cardano",
+      "description": "Cardano is a proof-of-stake blockchain platform founded on peer-reviewed research",
+      "active": false,
+      "logo": "/logos/ada.svg"
+    },
+    {
+      "id": "btc",
+      "name": "Bitcoin",
+      "description": "Bitcoin is the first and most well-known cryptocurrency, created in 2009",
+      "active": true,
+      "logo": "/logos/btc.svg"
+    },
+    {
+      "id": "eth",
+      "name": "Ethereum",
+      "description": "Ethereum is a decentralized platform that enables smart contracts and dApps",
+      "active": true,
+      "logo": "/logos/eth.svg"
+    },
+    {
+      "id": "ltc",
+      "name": "Litecoin",
+      "description": "Litecoin is a peer-to-peer cryptocurrency created as a fork of Bitcoin",
+      "active": false,
+      "logo": "/logos/ltc.svg"
+    },
+    {
+      "id": "trx",
+      "name": "TRON",
+      "description": "TRON is a blockchain platform focused on entertainment and content sharing",
+      "active": true,
+      "logo": "/logos/trx.svg"
+    },
+    {
+      "id": "usdt",
+      "name": "Tether",
+      "description": "Tether is a stablecoin pegged to the US Dollar",
+      "active": true,
+      "logo": "/logos/usdt.svg"
+    },
+    {
+      "id": "xrp",
+      "name": "XRP",
+      "description": "XRP is a digital asset built for payments on the XRP Ledger",
+      "active": true,
+      "logo": "/logos/xrp.svg"
+    }
+  ]
+}
