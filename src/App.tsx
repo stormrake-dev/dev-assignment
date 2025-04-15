@@ -9,18 +9,15 @@ import {
   Chip,
   Stack,
 } from '@mui/material'
-import { useState } from 'react'
 
 import './App.css'
 import { useAccounts } from './hooks/useAccounts'
 import { useTransactions } from './hooks/useTransactions'
-import Balances from './views/Balances'
 import Transactions from './views/Transactions'
 
 function App() {
   const { accounts, selectedAccount, selectedAccountId, setSelectedAccountId } = useAccounts();
   const { transactions, loading, error } = useTransactions(selectedAccountId || '');
-  const [selectedView] = useState<'transactions' | 'balances'>('transactions');
 
   return (
     <Box className="m-auto w-full lg:w-[800px] xl:w-[1000px]" sx={{ p: 4 }}>
@@ -60,22 +57,9 @@ function App() {
           onClick={() => {}}
           sx={{ cursor: 'pointer' }}
         />
-        <Chip
-          label="Balances" 
-          color="primary"
-          variant="outlined"
-          onClick={() => {}}
-          sx={{ cursor: 'pointer' }}
-        />
       </Stack>
       
-      {!loading && !error && (
-        selectedView === 'transactions' ? (
-          <Transactions transactions={transactions} selectedAccount={selectedAccount} />
-        ) : (
-          <Balances selectedAccount={selectedAccount} />
-        )
-      )}
+      {!loading && !error && <Transactions transactions={transactions} selectedAccount={selectedAccount} />}
     </Box>
   )
 }
