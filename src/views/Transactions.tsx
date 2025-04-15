@@ -1,7 +1,7 @@
 import {
-  Box,
-  Chip,
+  MenuItem,
   Paper,
+  Select,
   Stack,
   Table,
   TableBody,
@@ -9,18 +9,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  SelectChangeEvent,
+  InputLabel,
+  FormControl
 } from "@mui/material";
 import { Transaction } from "../models/Transaction";
 import { Account } from "../models/Account";
 import { useCurrencies } from "../hooks/useCurrencies";
+import TransactionsList  from "./TransactionsList"
 
 interface TransactionsProps {
   transactions: Transaction[];
   selectedAccount: Account;
+  filteredTransactions: Transaction[];
+  setFilterTransactions: (filterTransaction :  Transaction[]) => void;
 }
 
-const Transactions = ({ transactions, selectedAccount }: TransactionsProps) => {
+const Transactions = ({ transactions, selectedAccount, filteredTransactions, setFilterTransactions }: TransactionsProps) => {
   const { getCurrencyById } = useCurrencies();
 
   const getStatusColor = (status: string) => {
@@ -31,10 +36,28 @@ const Transactions = ({ transactions, selectedAccount }: TransactionsProps) => {
     return direction.toLowerCase() === 'buy' ? 'success.main' : 'error.main';
   };
 
+  const handleFilter = (event: SelectChangeEvent<string>) => {
+      const filters = transactions.filter((transaction) => {
+        return transaction.status === event.target.value;
+      });
+      setFilterTransactions(filters);
+  }
+
   return (
     <Stack spacing={1}>
-      <Typography variant="h6">Transactions</Typography>
-
+      <FormControl fullWidth sx={{ mb: 2 }}>
+          <InputLabel id="filter-select-label">Select Status</InputLabel>
+          <Select
+            labelId="filter-select-label"
+            id="filter-select"
+            onChange={handleFilter}
+            label="Select Status"
+          >
+              <MenuItem value='pending'> Pending </MenuItem>
+              <MenuItem value='success'> Success </MenuItem>
+              <MenuItem value='failed'> Failed </MenuItem>
+          </Select>
+      </FormControl>
       <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
         <Table stickyHeader>
           <TableHead>
@@ -48,54 +71,12 @@ const Transactions = ({ transactions, selectedAccount }: TransactionsProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((transaction, index) => {
-              const currency = getCurrencyById(transaction.currency_id);
-              return (
-                <TableRow key={transaction.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>
-                    {new Date(transaction.date).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={transaction.status}
-                      color={getStatusColor(transaction.status)}
-                      size="small"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      {currency?.logo && (
-                        <Box sx={{
-                          bgcolor: 'white',
-                          p: 0.5,
-                          borderRadius: 1,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          <img src={currency.logo} alt={currency.name} style={{ height: 16, width: 16 }} />
-                        </Box>
-                      )}
-                      <Typography variant="body2">{currency?.name}</Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      variant="body2"
-                      sx={{ color: getAmountColor(transaction.direction) }}
-                    >
-                      {transaction.amount}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">
-                      {selectedAccount.currency === 'USD' ? transaction.amount_usd : transaction.amount_aud}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {filteredTransactions.length > 0 ? (
+              <TransactionsList transactions={filteredTransactions} getStatusColor={getStatusColor} getAmountColor={getAmountColor} getCurrencyById={getCurrencyById} selectedAccount={selectedAccount}/>
+            ) : (
+              <TransactionsList transactions={transactions} getStatusColor={getStatusColor} getAmountColor={getAmountColor} getCurrencyById={getCurrencyById} selectedAccount={selectedAccount}/>
+            )}
+
           </TableBody>
         </Table>
       </TableContainer>

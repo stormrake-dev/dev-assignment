@@ -7,8 +7,8 @@ import {
   Alert,
   Box,
   Chip,
-  Typography,
   Stack,
+  SelectChangeEvent,
 } from '@mui/material'
 import { useState } from 'react'
 
@@ -17,12 +17,18 @@ import { useAccounts } from './hooks/useAccounts'
 import { useTransactions } from './hooks/useTransactions'
 import Balances from './views/Balances'
 import Transactions from './views/Transactions'
+import { useBalances } from './hooks/useBalances'
 
 function App() {
   const { accounts, selectedAccount, selectedAccountId, setSelectedAccountId } = useAccounts();
-  const { transactions, loading, error } = useTransactions(selectedAccountId || '');
-  const [selectedView] = useState<'transactions' | 'balances'>('transactions');
+  const { transactions, filteredTransactions, setFilteredTransactions, loading, error } = useTransactions(selectedAccountId || '');
+  const { balances, getBalances } = useBalances(transactions ? transactions : []);
+  const [ selectedView, setSelectedView ] = useState<'transactions' | 'balances'>('transactions');
 
+  const handleOnChange = (event: SelectChangeEvent<string>) => {
+    setSelectedAccountId(event.target.value);
+    getBalances();
+  }
   return (
     <Box className="m-auto w-full lg:w-[800px] xl:w-[1000px]" sx={{ p: 4 }}>
       <FormControl fullWidth sx={{ mb: 2 }}>
@@ -31,7 +37,7 @@ function App() {
           labelId="account-select-label"
           id="account-select"
           value={selectedAccountId || ''}
-          onChange={(e) => setSelectedAccountId(e.target.value)}
+          onChange={handleOnChange}
           label="Select Account"
         >
           {accounts.map((account) => (
@@ -53,24 +59,38 @@ function App() {
         </Alert>
       )}
 
-      <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-        <Chip
-          label="Transactions"
-          color="primary"
-          variant="filled"
-          onClick={() => {}}
-          sx={{ cursor: 'pointer' }}
-        />
-        <Typography > 
-          Balances
-        </Typography>
-      </Stack>
-      
+      <Box sx={{ mb: 2, display: 'flex', flexDirection: 'row', justifyContent: 'start', gap:2}}>
+        <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+          <Chip
+            label="Transactions"
+            color="primary"
+            variant="filled"
+            onClick={() => setSelectedView('transactions')}
+            sx={{ cursor: 'pointer' }}
+            />
+        </Stack>
+
+        <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+          <Chip
+            label="Balances"
+            color="primary"
+            variant="filled"
+            onClick={() => setSelectedView('balances')}
+            sx={{ cursor: 'pointer' }}
+            />
+        </Stack>
+      </Box>
+
       {!loading && !error && (
         selectedView === 'transactions' ? (
-          <Transactions transactions={transactions} selectedAccount={selectedAccount} />
+          <Transactions 
+          transactions={transactions} 
+          selectedAccount={selectedAccount} 
+          filteredTransactions={filteredTransactions}
+          setFilterTransactions={setFilteredTransactions}
+          />
         ) : (
-          <Balances selectedAccount={selectedAccount} />
+          <Balances balances={balances}/>
         )
       )}
     </Box>

@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Transaction } from '../models/Transaction';
 import transactionsData from '../data/transactions.json';
-
-interface TransactionsData {
-  transactions: Transaction[];
-}
+import { TransactionsData } from '../models/Transaction';
 
 export const useTransactions = (accountId: string) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     try {
@@ -31,5 +29,5 @@ export const useTransactions = (accountId: string) => {
     }
   }, [accountId]);
 
-  return { transactions, loading, error };
+  return { transactions, filteredTransactions, setFilteredTransactions,loading, error };
 };
