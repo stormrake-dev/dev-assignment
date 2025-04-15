@@ -1,3 +1,9 @@
+import { Account } from './Account';
+
+export interface TransactionsData {
+  transactions: Transaction[];
+}
+
 export interface Transaction {
   id: string;
   date: string;
@@ -9,3 +15,12 @@ export interface Transaction {
   account_id: string;
   status: 'pending' | 'success' | 'failed';
 }
+
+export type TransactionListProps = {
+  transactions: Transaction[];
+  getStatusColor: (status: string) => string;
+  getAmountColor: (direction: string) => string;
+  getCurrencyById: (currencyId: string) => { logo: string; name: string } | undefined;
+  selectedAccount: Account;
+};
+
