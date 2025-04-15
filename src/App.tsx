@@ -7,6 +7,7 @@ import {
   Alert,
   Box,
   Chip,
+  Typography,
   Stack,
 } from '@mui/material'
 import { useState } from 'react'
@@ -60,13 +61,9 @@ function App() {
           onClick={() => {}}
           sx={{ cursor: 'pointer' }}
         />
-        <Chip
-          label="Balances" 
-          color="primary"
-          variant="outlined"
-          onClick={() => {}}
-          sx={{ cursor: 'pointer' }}
-        />
+        <Typography > 
+          Balances
+        </Typography>
       </Stack>
       
       {!loading && !error && (
