@@ -1,1 +1,8 @@
-// TODO: Implement Balance model
+export interface CurrencyBalance {
+  available: number;
+  frozen: number;
+}
+
+export interface Balance {
+  [currency: string]: CurrencyBalance;
+}
